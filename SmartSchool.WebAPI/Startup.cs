@@ -30,7 +30,10 @@ namespace SmartSchool.WebAPI
             services.AddDbContext<SmartContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("sqlitedb"))
             );
-            services.AddControllers();
+
+            services.AddScoped<IRepository, Repository>();
+            services.AddControllers()
+                    .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
